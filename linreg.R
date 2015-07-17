@@ -52,6 +52,18 @@ linregVec = function(x,y,alpha=0.05, maxIterations = 1000000){
     return(theta)
 }
 
+
+# looking at the math t(x)*x*theta = t(x)*y. We can solve for theta (the coefficients)
+linregLinAlg = function(x,y){
+  
+  leftHandOperator = t(x)%*%x
+  rightHandSide = t(x)%*%y
+  # use R's Linear Algebra solver.
+  theta = solve(leftHandOperator,rightHandSide)
+  
+  return(theta)
+}
+
 #Run our function. It takes a while. Pun not intended.
 Coefficients <- linregVec(x,y,0.1)
 
@@ -64,5 +76,33 @@ theta
 
 # R's standard version of theta
 fit.lm
+
+
+#Get least squares (training).
+
+error <- x %*% theta - y
+
+# divide by number of observations in order to get error per observation.
+leastSq <- 0.5*t(error)%*%error / nrow(error)
+
+leastSq
+  
+yTest <- test[,14]
+xTest <- as.matrix(test[,c(1:13,15)])
+
+testError <- xTest %*% theta - yTest
+
+testLeastSq <- 0.5*t(testError)%*%testError / nrow(testError)
+
+#test error per observation. This should be higher than the test error per observation (unless we're really lucky!)
+testLeastSq
+
+
+
+
+
+
+
+
 
 
