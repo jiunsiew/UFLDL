@@ -24,7 +24,31 @@ rm(list = ls())
     close(lab)
     cbind.data.frame(y=factor(y), X)
   }  
-  train <- readTrain()
+  X <- readTrain()
+
+  # only get 0's and 1's for this example.
+  x <- X[X$y == 1 | X$y == 0,]
+  y <- x[,1]
+  
+  #shift the data by the mean and scale according to the standard deviation. 
+  m <- rowMeans(x[,2:ncol(x)], dims = 1)
+  s <- apply(x[,2:ncol(x)],1,sd)
+
+  #Get our shcaled training set.
+  Train <- data.frame(y,(x[,2:ncol(x)] - m) / (s+0.1))
+
+  #set up an index and permute the training set.
+  index <- 1:nrow(Train)
+  permIndex <- sample(index)
+
+
+  
+  Train <- Train[permIndex,]
+
+
+  # TODO: Do the same for our test set. Set this up as a new function to retrieve the training / test data.
+  
+
   #test <- read('t10k')
   #list(train=train, test=test)
 
