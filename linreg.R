@@ -44,7 +44,7 @@ linregVec = function(x,y,alpha=0.05, maxIterations = 1000000){
       h = x %*% theta
       err = h - y
       delta = (t(x) %*% err)
-      delta = delta / norm(delta, "F")
+      delta = delta / min(1,norm(delta, "F"))
       theta = theta - alpha*delta
       n = n+1 
     }
