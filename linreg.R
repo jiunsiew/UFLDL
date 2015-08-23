@@ -65,7 +65,7 @@ linregLinAlg = function(x,y){
 }
 
 #Run our function. It takes a while. Pun not intended.
-Coefficients <- linregVec(x,y,0.1)
+Coefficients <- linregLinAlg(x,y)
 
 
 # the easy way...
