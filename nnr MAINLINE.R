@@ -35,12 +35,35 @@ x <- as.matrix(train[,c(5,6,8)])
 
 nneurons <- ncol(x)
 
-W1 <- rnorm(nneurons^2, mean = 0, sd = 1)
-b1 <- rnorm(nneurons, mean = 0, sd = 1)
+W1 <- as.matrix(rnorm(nneurons^2, mean = 0, sd = 1))
+b1 <- as.matrix(rnorm(nneurons, mean = 0, sd = 1))
 
-sigmoid = function(x,theta){
-  return (1 / (1 + exp(-1*theta%*%t(x))))
+sigmoid = function(x,theta,b){
+  return (1 / (1 + exp(-1*(theta%*%t(x) + b))))
 }
+
+layer1 = function(x){
+  w_1 = W1[1:3,]
+  w_2 = W1[4:6,]
+  w_3 = W1[7:9,]
+  
+  
+  a_1 = sigmoid(x, w_1, b1[1])
+  a_2 = sigmoid(x, w_2, b1[2])
+  a_3 = sigmoid(x, w_3, b1[3])
+  
+  a = as.matrix(data.frame(t(a_1),t(a_2),t(a_3)))
+  return(a)
+}
+
+b_2 = rnorm(1, mean = 0, sd = 1)
+a = layer1(x)
+
+W2 <- as.matrix(rnorm(nneurons, mean = 0, sd = 1))
+
+output <- sigmoid(a,t(W2),b_2)
+
+
 
 
 
