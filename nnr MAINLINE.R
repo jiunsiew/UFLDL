@@ -42,6 +42,10 @@ sigmoid = function(x,theta,b){
   return (1 / (1 + exp(-1*(theta%*%t(x) + b))))
 }
 
+sg = function(x){
+  return (1 / (1 + exp(-1*(x))))
+}
+
 layer1 = function(x){
   w_1 = W1[1:3,]
   w_2 = W1[4:6,]
@@ -63,10 +67,17 @@ W2 <- as.matrix(rnorm(nneurons, mean = 0, sd = 1))
 
 output <- sigmoid(a,t(W2),b_2)
 
+output = t(output)
 
+derivSg = function(x){
+  sg(x)*(1-sg(x))
+}
 
+z_2 <- a%*%W2 + b_2
 
+dv <- derivSg(z_2)
 
+d_nl <-  -1*(y - sg(z_2))*derivSg(z_2)
 
 
 
