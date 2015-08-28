@@ -125,17 +125,24 @@ gradJ = function(x,theta){
 
 
 
-logregVec = function(x,y,numClasses = 10,alpha=0.05, maxIterations = 1000000){
+softMaxReg = function(x,y,numClasses = 10,alpha=0.05, maxIterations = 1000000){
   
   
   # alpha is the iteration paramater... Might want to make this higher than the default...
-  alpha = 0.0005
+  #alpha = 0.0001
   # number of input variables
   nInput <- (ncol(x))
   
   # coefficients
-  theta <- matrix(0,nInput,10)
+  #theta <- matrix(0,nInput,10)
+  
+  theta <- rnorm(n = nInput * 10, m = 0, s = 1)
+  theta <- matrix(theta, nrow = nInput)
+  
+  
   #theta <- 
+  
+  
   
   # Cost function gradient. This is our starting point.
   delta <- matrix(1,nInput,10)
@@ -143,6 +150,9 @@ logregVec = function(x,y,numClasses = 10,alpha=0.05, maxIterations = 1000000){
   # counter to make sure we don't run an infinite loop.
   n = 0
   #gradient descent. TODO: When delta gets ~ < 10 the algorithm becomes really slow to converge. Might need to dynamically increase alpha depending on the size of norm(delta, "F")
+  
+  prevMax = 999999
+  nowMax = 0
   while (abs(max(delta)) > 0.0001 & n < maxIterations)
   {
     
@@ -150,10 +160,20 @@ logregVec = function(x,y,numClasses = 10,alpha=0.05, maxIterations = 1000000){
     delta = gradJ(x,theta)
     #delta = output
     #deltaNorm = delta / norm(delta, "F")
-    theta = theta - alpha*delta
+    theta = theta + alpha*delta
     n = n+1 
     #print(n)
-    #print(abs(max(delta)))
+    print(abs(max(delta)))
+    
+    nowMax = abs(max(delta))
+    
+    if (prevMax - nowMax < (-nowMax / 10))
+      alpha = alpha *0.1
+    else
+      alpha = alpha * 1.1
+    
+    prevMax = nowMax
+    print(alpha)
     #print(norm(delta, "F"))
   }
   
@@ -163,7 +183,7 @@ logregVec = function(x,y,numClasses = 10,alpha=0.05, maxIterations = 1000000){
 
 
 #Run our function. It takes a while. Pun not intended.
-Coefficients <- logregVec(x,y,0.0001)
+Coefficients <- softMaxReg(x,y,alpha = 0.0001)
 
 # the easy way. Even this is really long.
 
