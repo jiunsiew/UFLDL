@@ -38,6 +38,17 @@ nneurons <- ncol(x)
 W1 <- as.matrix(rnorm(nneurons^2, mean = 0, sd = 1))
 b1 <- as.matrix(rnorm(nneurons, mean = 0, sd = 1))
 
+W_1 <- matrix(W1, nrow = 3, ncol = 3)
+
+a_1 <- W_1 %*% t(x) + matrix(b1, nrow = 3, ncol = 407)#+ t(b1)
+
+
+
+layer1 = function(x){
+  w_1 = W1[1:3,]
+  w_2 = W1[4:6,]
+  w_3 = W1[7:9,]
+
 sigmoid = function(x,theta,b){
   return (1 / (1 + exp(-1*(theta%*%t(x) + b))))
 }
@@ -46,11 +57,7 @@ sg = function(x){
   return (1 / (1 + exp(-1*(x))))
 }
 
-layer1 = function(x){
-  w_1 = W1[1:3,]
-  w_2 = W1[4:6,]
-  w_3 = W1[7:9,]
-  
+temp <- w_1 %*% t(x) + b1[1]  
   
   a_1 = sigmoid(x, w_1, b1[1])
   a_2 = sigmoid(x, w_2, b1[2])
@@ -79,6 +86,7 @@ dv <- derivSg(z_2)
 
 d_nl <-  -1*(y - sg(z_2))*derivSg(z_2)
 
+temp <- W1%*%t(d_nl)
 
-
+z_1 <- x%*%W1 + b_1
 
