@@ -51,27 +51,36 @@ sg = function(x){
   return (1 / (1 + exp(-1*(x))))
 }
 
-a_2 = sg(t(W_1 %*% t(x) + b1))
+z_2 = t(W_1 %*% t(x) + b1)
+a_2 = sg(z_2)
 
 
 W_2 <- t(as.matrix(rnorm(nneurons, mean = 0, sd = 1)))
 b2 <- as.matrix(rnorm(1, mean = 0, sd = 1))
 b2 = matrix(b1, nrow = 1, ncol = nrow(x))
 
-a_3 <- sg(t(W_2 %*% t(a_2) + b2)  )
+z_3 = t(W_2 %*% t(a_2) + b2)
+a_3 <- sg(z_3)
   
 
 derivSg = function(x){
   sg(x)*(1-sg(x))
 }
 
-z_2 <- a%*%W2 + b_2
 
-dv <- derivSg(z_2)
+dv <- derivSg(z_3)
 
-d_nl <-  -1*(y - sg(z_2))*derivSg(z_2)
+delta_3 <-  -1*(y - a_3)*derivSg(z_3)
 
-temp <- W1%*%t(d_nl)
+delta_2 <- t(W_2)%*%t(delta_3) * derivSg(t(z_2))
 
-z_1 <- x%*%W1 + b_1
+d_2_placeholder <- as.matrix(c(1))
+d_2_placeholder = matrix(tmp, nrow = 1, ncol = nrow(x))
+
+nabla_w_1 = delta_2 %*% a_2
+nabla_b_1 = delta_2 %*% t(d_2_placeholder)
+
+nabla_w_2 = t(delta_3) %*% a_3
+
+
 
