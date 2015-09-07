@@ -45,7 +45,7 @@ W_1 <- matrix(W1, nrow = 3, ncol = 3)
 
 #a_1 <- t(W_1 %*% t(x) + b1)
 
-
+a_1 = x
 
 sg = function(x){
   return (1 / (1 + exp(-1*(x))))
@@ -77,10 +77,11 @@ delta_2 <- t(W_2)%*%t(delta_3) * derivSg(t(z_2))
 d_2_placeholder <- as.matrix(c(1))
 d_2_placeholder = matrix(tmp, nrow = 1, ncol = nrow(x))
 
-nabla_w_1 = delta_2 %*% a_2
+nabla_w_1 = delta_2 %*% a_1
 nabla_b_1 = delta_2 %*% t(d_2_placeholder)
 
-nabla_w_2 = t(delta_3) %*% a_3
+nabla_w_2 = t(delta_3) %*% a_2
+nabla_b_2 = t(delta_3) %*% t(d_2_placeholder)
 
 
 
