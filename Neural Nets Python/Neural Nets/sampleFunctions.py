@@ -32,18 +32,14 @@ def predict(nets,matrices,i):
     a = matrices[i][0]
     for b, w in zip(nets.biases, nets.weights):
         a = nn.sigmoid(np.dot(w, a).reshape(b.size,1) + b)
-    showInput(matrices,i)
     return np.argmax(a)
 
 def showInput(matrices,i):
     x,y = matrices[i]
-    print (y)
+    print y
     matshow(np.asmatrix(x).reshape(28,28), fignum = 99, cmap = plt.get_cmap('gray') )
     show()
     return y
 
 
 
-
-for x in xrange(10)
-    print(x)

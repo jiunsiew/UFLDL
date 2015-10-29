@@ -36,14 +36,22 @@
 #argmax(nets.feedforward(x))
 #y
 
-import Neural_Nets as nn
-nets = nn.Network([784,30,10])
+import numpy as np
 import mnist_loader
 Train, Val, Test = mnist_loader.load_data_wrapper()
 
+import artificially_expand_data as aed
+
+
+
+
+import Neural_Nets as nn
+nets = nn.Network([784,100,10], cost = nn.CrossEntropyCost)
+
+
 def run_NN():
 
-    nets.SGD(Train, 10, 10, 3.0, test_data = Test)
+    nets.SGD(Train, 30, 30, 0.5, lmbda = 5.0, evaluation_data = Val, monitor_evaluation_accuracy = True)
 
 
 #import mnist_loader

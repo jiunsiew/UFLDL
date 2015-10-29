@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="artificially_expand_data.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="mnist_loader.py">
       <SubType>Code</SubType>
     </Compile>
