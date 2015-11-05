@@ -80,12 +80,12 @@ def artificially_expand(Train):
     i = 0
     for j in range(np.size(Train)/2):
         t1 = rotate(Train[j][0], np.random.normal(0,10))
-        t2 = rotate(Train[j][0], np.random.normal(0,10))
-        t3 = translate(Train[j][0],np.random.normal(0,1),np.random.normal(0,1))
+        #t2 = rotate(Train[j][0], np.random.normal(0,10))
+        #t3 = translate(Train[j][0],np.random.normal(0,1),np.random.normal(0,1))
 
-        Train_new.append((t1,Train[j][1]))
-        Train_new.append((t2,Train[j][1]))
-        Train_new.append((t3,Train[j][1]))
+        Train_new.append((t1.reshape(784,1),Train[j][1]))
+        #Train_new.append((t2.reshape(784,1),Train[j][1]))
+        #Train_new.append((t3.reshape(784,1),Train[j][1]))
 
         if( i % 1000 == 0):
             print i
