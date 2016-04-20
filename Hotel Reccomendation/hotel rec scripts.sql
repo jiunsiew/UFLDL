@@ -141,3 +141,4 @@ EXEC(@sql)
 
 SELECT *
 FROM hotel_rec_destinations_last_mil_ranking_v1
+ORDER BY user_id

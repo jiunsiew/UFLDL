@@ -33,3 +33,19 @@ eigenvectors_2 <- append(eigenvectors, rep(0,100-num_eigenvectors), after = leng
 D <- as.matrix(diag(eigenvectors_2),nrow=100,ncol=100)
 
 A.New <- A.SVD$u %*% D %*% A.SVD$v
+
+u_df <- as.data.frame(t(A.SVD$u))
+v_df <- as.data.frame(t(A.SVD$v))
+pairs(v_df[,1:10])
+
+max(A.New)
+min(A.New)
+mean(abs(A.New))
+mean(abs(A))
+
+median(abs(A.New))
+median(abs(A))
+
+# basic stats
+quantile(unlist(abs(A.New)), c(0.5, 0.8, 0.95))
+quantile(unlist(abs(A)), c(0.5, 0.8, 0.95))

@@ -21,7 +21,7 @@ close(conn)
 library(MASS)
 
 #dimension of latent factors
-dim = 10
+dim = 15
 
 R <- as.matrix(rawData[,2:101])
 
@@ -39,22 +39,52 @@ q_init <- matrix(rnorm(dim*100, mean = 0, sd = 2), dim)
 
 
 # learning rate
-gamma = 0.01
+gamma = 0.000001
 # regularisation paramater
-lambda = 5
+lambda = 10
+
+#initial cost
+cost(p_init,q_init)
 
 
 # gradient descent step
-p <- p_init - gamma * ( ( R - p_init %*% q_init ) %*% t(q_init) - lambda * abs(p_init))
 
-q <- q_init - gamma * ( t(p_init) %*% ( R - p_init %*% q_init ) - lambda * abs(q_init))
+max_steps = 30
+error = 100000000
+
+step_count = 0
+
+while(step_count < max_steps && abs(error) > 0.0005){
+
+init_cost = cost(p_init,q_init)
+  
+p <- p_init + gamma * ( ( R - p_init %*% q_init ) %*% t(q_init) - lambda * p_init)
+
+q <- q_init + gamma * ( t(p_init) %*% ( R - p_init %*% q_init ) - lambda * q_init)
 
 p_init <- p
 q_init <- q
 
-cost(p,q)
+error = cost(p,q) - init_cost
+
+step_count = step_count + 1
+print(cost(p,q))
+print(step_count)
+print(abs(error))
+}
 
 
+# new rating matrix.
+new_R <- p %*% q
 
+# basic stats
+plot(q[1,],q[2,])
+plot(q[2,],q[3,])
+plot(q[2,],q[10,])
 
+q_df <- as.data.frame(t(q))
+pairs(q_df)
+
+quantile(unlist(abs(new_R)), c(0.5, 0.8, 0.95))
+quantile(unlist(abs(R)), c(0.5, 0.8, 0.95))
 
