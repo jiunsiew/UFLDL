@@ -15,6 +15,10 @@
 #>>> funcs.showInput(test.Test,34)
 
 
+
+class sampleFunctions(object):
+    """description of class"""
+
     
 import numpy as np
 from matplotlib.pyplot import matshow
@@ -37,9 +41,5 @@ def showInput(matrices,i):
     show()
     return y
 
-def showMatrix(x):
-    matshow(x, fignum = 99, cmap = plt.get_cmap('gray') )
-    show()
-    return True
 
 
