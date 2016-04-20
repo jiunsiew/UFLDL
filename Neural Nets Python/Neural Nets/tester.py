@@ -41,16 +41,6 @@ import mnist_loader
 Train, Val, Test = mnist_loader.load_data_wrapper()
 
 import artificially_expand_data as aed
-import sampleFunctions as sf
-#from matplotlib.pyplot import matshow
-#import matplotlib.pyplot as plt
-
-#as an example rotate Train[0][0] by 15 degrees...
-#x = aed.rotate(Train[0][0],15)
-
-#artificially expand our training set.
-
-Train_new = aed.artificially_expand(Train)
 
 
 
@@ -61,7 +51,7 @@ nets = nn.Network([784,100,10], cost = nn.CrossEntropyCost)
 
 def run_NN():
 
-    nets.SGD(Train_new, 30, 30, 0.5, lmbda = 5.0, evaluation_data = Val, monitor_evaluation_accuracy = True)
+    nets.SGD(Train, 30, 30, 0.5, lmbda = 5.0, evaluation_data = Val, monitor_evaluation_accuracy = True)
 
 
 #import mnist_loader
