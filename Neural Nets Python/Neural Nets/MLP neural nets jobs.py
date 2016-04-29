@@ -48,7 +48,8 @@ tar = y.reshape(size,1)
 
 # randomise input and target.
 shuff = np.append(inp,tar,1)
-np.random.shuffle(shuff)
+#np.random.shuffle(shuff)
+np.random.seed(seed = 1674787866)
 
 new_x_train = shuff[:1200,:891]
 new_y_train = shuff[:1200, 891]
@@ -80,19 +81,28 @@ del new_y_test
 
 print("running network")
 # Create network with 2 layers and random initialized
-net = nl.net.newff(ranges,[20, 1])
+net = nl.net.newff(ranges,[15, 1])
 
 # Train network
-error = net.train(inp_train, tar_train, epochs=40, show=1, goal=0.02)
+#net.trainf = nl.train.train_gdx
+
+#error = net.train(input = inp_train,target = tar_train, epochs=400, show=50, goal=0.02, rr = 0.1)
+error = net.train(input = inp_train,target = tar_train, epochs=10, show=1, goal=0.02, rr = 0.1)
 
 # Simulate network
 out = net.sim(inp_test)
 
-correct = 0
 
 validation = np.append(out,tar_test,1)
 
+correct = 0
 
+for row in validation:
+    if abs(row[0]-row[1]) < 0.5 or (row[0] < 0 and row[1] < 0.1):
+        correct = correct + 1
+
+test_acc = correct*1.0 / 255
+print(test_acc)
 
 # Plot result
 import pylab as pl
